@@ -61,3 +61,38 @@ export default class AppMixin extends wepy.mixin {
   }
 }
 ```
+
+## wx 组件 picker 动态渲染
+
+当修改个人信息时, 表单中的picker组件需要动态的加载范围, index 和值, 经过多方实验后发现: 应先加载范围后$apply, 再加载值$apply.
+```
+  onLoad () {
+    fetchPropertyRoomRange().then(succ => {
+      this.roomRange = succ.roomRange
+      this.roomIndex = succ.roomIndex
+    }, fail => {
+      wx.showToast({
+        title: fail,
+        image: '../styles/images/warning-white.png',
+        duration: 3000
+      })
+    })
+    fetchLivingRange().then(succ => {
+      this.livingRange = succ.livingRange
+      this.livingIndex = succ.livingIndex
+    }, fail => {
+      wx.showToast({
+        title: fail,
+        image: '../styles/images/warning-white.png',
+        duration: 3000
+      })
+    })
+    this.$apply()
+    this.realName = this.userInfo.realName
+    this.genderValue = this.userInfo.gender
+    this.birthdayValue = this.userInfo.birthday
+    this.roomValue = this.userInfo.room
+    this.livingValue = this.userInfo.living
+    this.$apply()
+  }
+```
