@@ -36,3 +36,28 @@ import { getUserInfoBySession } from './api'
   }
 ```
 (注意: 此处因为在app初始化时通过wepy-redux执行了setStore(store), 所以通过getStore()来获取出来的store是与app绑定后的store, 直接使用store也许会出现未知问题)
+
+## mixins 中使用@connect
+
+```
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+
+/* eslint-disable no-undef */
+@connect({
+  userInfo (state) {
+    return state.user.userInfo
+  }
+})
+export default class AppMixin extends wepy.mixin {
+  data = {
+  }
+  methods = {
+  }
+  onLoad () {
+    if (!this.userInfo) {
+      wx.redirectTo({ url: 'login' })
+    }
+  }
+}
+```
