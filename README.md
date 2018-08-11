@@ -39,7 +39,7 @@ import { getUserInfoBySession } from './api'
 
 ## mixins 中使用@connect
 
-```
+``` js
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
 
@@ -65,7 +65,7 @@ export default class AppMixin extends wepy.mixin {
 ## wx 组件 picker 动态渲染
 
 当修改个人信息时, 表单中的picker组件需要动态的加载范围, index 和值, 经过多方实验后发现: 应先加载范围后$apply, 再加载值$apply.
-```
+``` js
   onLoad () {
     fetchPropertyRoomRange().then(succ => {
       this.roomRange = succ.roomRange
